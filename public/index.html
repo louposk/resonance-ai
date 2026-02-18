@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resonance AI - Discover the Stories Behind Every Song</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --accent: #45b7d1;
+            --warning: #ffa726;
+            --success: #66bb6a;
+            --error: #ef5350;
+            --purple: #ab47bc;
+            --indigo: #5c6bc0;
+            --teal: #26a69a;
+            --lime: #9ccc65;
+
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --text-muted: #666666;
+            --border: #333333;
+            --border-light: #444444;
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.6);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.7);
+            --shadow-glow: 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '🎵';
+            font-size: 2rem;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow), var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-light);
+            transform: translateY(-2px);
+        }
+
+        .search-demo {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+        }
+
+        .search-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+        }
+
+        .results {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 2rem;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .song-result {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .song-result:last-child {
+            margin-bottom: 0;
+        }
+
+        .song-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .song-artist {
+            color: var(--secondary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .song-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .analysis-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .analysis-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .analysis-label {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analysis-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .themes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .theme-tag {
+            background: linear-gradient(135deg, var(--purple), var(--indigo));
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .features {
+            padding: 4rem 0;
+            background: var(--bg-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-tertiary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .api-docs {
+            padding: 4rem 0;
+        }
+
+        .code-block {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .endpoint {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .method {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .error {
+            color: var(--error);
+            background: rgba(239, 83, 80, 0.1);
+            border: 1px solid rgba(239, 83, 80, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .success {
+            color: var(--success);
+            background: rgba(102, 187, 106, 0.1);
+            border: 1px solid rgba(102, 187, 106, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo gradient-text">Resonance AI</div>
+                <nav class="nav">
+                    <a href="#demo">Try Demo</a>
+                    <a href="#features">Features</a>
+                    <a href="#api">API Docs</a>
+                    <a href="/api" target="_blank">API Reference</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="gradient-text">Discover the Stories Behind Every Song</h1>
+                <p>Unlock the hidden meanings, creative processes, and fascinating trivia of your favorite tracks. Resonance AI combines cutting-edge AI with music platform data to reveal the deeper stories that make music truly resonate.</p>
+
+                <div class="hero-buttons">
+                    <a href="#demo" class="btn btn-primary">Try Demo</a>
+                    <a href="/api" class="btn btn-secondary" target="_blank">View API Docs</a>
+                </div>
+
+                <div id="demo" class="search-demo">
+                    <h3 style="margin-bottom: 1rem; color: var(--text-secondary);">🎯 Try searching for a song</h3>
+                    <form class="search-form" id="searchForm">
+                        <input
+                            type="text"
+                            class="search-input"
+                            id="searchInput"
+                            placeholder="e.g., 'Billie Jean Michael Jackson' or 'Hotel California'"
+                            required
+                        >
+                        <button type="submit" class="btn btn-primary">
+                            <span id="searchButtonText">Search</span>
+                        </button>
+                    </form>
+
+                    <div id="results" class="results">
+                        <div id="loadingState" class="loading">
+                            <div class="spinner"></div>
+                            Searching and analyzing...
+                        </div>
+                        <div id="resultsContent"></div>
+                        <div id="errorMessage" class="error" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;" class="gradient-text">
+                    Powerful Features
+                </h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3 class="feature-title gradient-text">AI Analysis</h3>
+                        <p class="feature-description">Advanced AI provides deep insights into song meanings, writing processes, and cultural significance.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎵</div>
+                        <h3 class="feature-title gradient-text">Multi-Platform Search</h3>
+                        <p class="feature-description">Search across Spotify and YouTube to find comprehensive information about any song.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title gradient-text">Smart Caching</h3>
+                        <p class="feature-description">Lightning-fast responses with intelligent caching that avoids duplicate AI processing.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <h3 class="feature-title gradient-text">Secure API</h3>
+                        <p class="feature-description">Enterprise-grade authentication with JWT tokens and API key management.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title gradient-text">Rich Data</h3>
+                        <p class="feature-description">Get detailed information including themes, trivia, writing process, and cultural impact.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3 class="feature-title gradient-text">RESTful API</h3>
+                        <p class="feature-description">Clean, well-documented REST API with comprehensive rate limiting and error handling.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="api" class="api-docs">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;" class="gradient-text">
+                    Quick API Guide
+                </h2>
+
+                <h3 style="color: var(--secondary); margin-bottom: 1rem;">Search for Songs</h3>
+                <div class="code-block">
+<span class="method">GET</span> <span class="endpoint">/api/songs/search?q=billie+jean+michael+jackson</span>
+<span style="color: var(--text-muted);">Headers:</span> x-api-key: your-api-key
+                </div>
+
+                <h3 style="color: var(--secondary); margin: 2rem 0 1rem;">Get AI Analysis</h3>
+                <div class="code-block">
+<span class="method">GET</span> <span class="endpoint">/api/songs/{song-id}/analysis</span>
+<span style="color: var(--text-muted);">Headers:</span> x-api-key: your-api-key
+                </div>
+
+                <h3 style="color: var(--secondary); margin: 2rem 0 1rem;">User Authentication</h3>
+                <div class="code-block">
+<span class="method">POST</span> <span class="endpoint">/api/auth/register</span>
+{
+  "email": "user@example.com",
+  "password": "secure-password"
+}
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="/api" class="btn btn-primary" target="_blank">
+                        View Complete API Documentation
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Resonance AI. Built with TypeScript, Express.js, PostgreSQL, and AI magic. ✨</p>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE = '';
+
+        document.getElementById('searchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) return;
+
+            const results = document.getElementById('results');
+            const loading = document.getElementById('loadingState');
+            const content = document.getElementById('resultsContent');
+            const error = document.getElementById('errorMessage');
+            const button = document.getElementById('searchButtonText');
+
+            // Show loading state
+            results.classList.add('show');
+            loading.style.display = 'block';
+            content.innerHTML = '';
+            error.style.display = 'none';
+            button.textContent = 'Searching...';
+
+            try {
+                // For demo purposes, we'll simulate the API call
+                await simulateSearch(query, content, loading);
+                button.textContent = 'Search';
+            } catch (err) {
+                console.error('Search error:', err);
+                loading.style.display = 'none';
+                error.textContent = 'Search failed. This is a demo interface - the full API requires authentication.';
+                error.style.display = 'block';
+                button.textContent = 'Search';
+            }
+        });
+
+        async function simulateSearch(query, content, loading) {
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            loading.style.display = 'none';
+
+            // Demo data based on query
+            const mockResults = getMockResults(query);
+
+            content.innerHTML = mockResults.map(song => `
+                <div class="song-result">
+                    <div class="song-title">${song.title}</div>
+                    <div class="song-artist">by ${song.artist}</div>
+                    <div class="song-meta">
+                        ${song.album ? `<span>Album: ${song.album}</span>` : ''}
+                        ${song.year ? `<span>Year: ${song.year}</span>` : ''}
+                        <span>Source: ${song.source}</span>
+                    </div>
+
+                    ${song.analysis ? `
+                        <div class="analysis-section">
+                            <div class="analysis-item">
+                                <div class="analysis-label">
+                                    🎯 Meaning
+                                </div>
+                                <div class="analysis-content">${song.analysis.meaning}</div>
+                            </div>
+
+                            <div class="analysis-item">
+                                <div class="analysis-label">
+                                    ✍️ Writing Process
+                                </div>
+                                <div class="analysis-content">${song.analysis.writingProcess}</div>
+                            </div>
+
+                            <div class="analysis-item">
+                                <div class="analysis-label">
+                                    🔍 Trivia
+                                </div>
+                                <div class="analysis-content">${song.analysis.trivia}</div>
+                            </div>
+
+                            <div class="analysis-item">
+                                <div class="analysis-label">
+                                    🏷️ Themes
+                                </div>
+                                <div class="themes">
+                                    ${song.analysis.themes.map(theme =>
+                                        `<span class="theme-tag">${theme}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function getMockResults(query) {
+            const q = query.toLowerCase();
+
+            if (q.includes('billie jean') || q.includes('michael jackson')) {
+                return [{
+                    title: 'Billie Jean',
+                    artist: 'Michael Jackson',
+                    album: 'Thriller',
+                    year: 1982,
+                    source: 'Spotify',
+                    analysis: {
+                        meaning: 'Billie Jean is about a man who is accused by a woman of being the father of her child, which he denies. The song explores themes of false accusations, media scrutiny, and the dangers of fame.',
+                        writingProcess: 'Michael Jackson wrote this song based on his experiences with obsessive fans. Quincy Jones initially thought it was too weak for the Thriller album, but Jackson insisted on including it.',
+                        trivia: 'This was the first video by a Black artist to receive heavy rotation on MTV. Jackson debuted the moonwalk during a performance of this song on Motown 25. The bassline was performed by Louis Johnson.',
+                        themes: ['false accusations', 'fame', 'denial', 'media scrutiny', 'responsibility']
+                    }
+                }];
+            }
+
+            if (q.includes('hotel california') || q.includes('eagles')) {
+                return [{
+                    title: 'Hotel California',
+                    artist: 'Eagles',
+                    album: 'Hotel California',
+                    year: 1976,
+                    source: 'Spotify',
+                    analysis: {
+                        meaning: 'A haunting allegory about excess, decadence, and the dark side of the American Dream, particularly the hedonistic lifestyle of 1970s California.',
+                        writingProcess: 'Don Felder created the music, while Don Henley and Glenn Frey wrote the lyrics. The song went through multiple iterations before reaching its final form.',
+                        trivia: 'The guitar solo is considered one of the greatest in rock history. The song won a Grammy for Record of the Year in 1978. The Hotel California album cover features the Beverly Hills Hotel.',
+                        themes: ['excess', 'American Dream', 'decadence', 'entrapment', 'materialism']
+                    }
+                }];
+            }
+
+            // Default result for other queries
+            return [{
+                title: 'Demo Song Result',
+                artist: 'Demo Artist',
+                album: 'Demo Album',
+                year: 2024,
+                source: 'YouTube',
+                analysis: {
+                    meaning: 'This is a demo result. In the real application, our AI would provide detailed analysis of the actual song you searched for.',
+                    writingProcess: 'The real API uses advanced AI to analyze the songwriting process, including collaboration details, inspiration sources, and creative decisions.',
+                    trivia: 'With a valid API key, you would get real trivia, chart performance data, cultural impact information, and fascinating behind-the-scenes details.',
+                    themes: ['demo', 'placeholder', 'example', 'test']
+                }
+            }];
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add some interactive effects
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Show success message on page load
+        setTimeout(() => {
+            if (!window.location.hash) {
+                const successMsg = document.createElement('div');
+                successMsg.className = 'success';
+                successMsg.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 1000; max-width: 400px;';
+                successMsg.innerHTML = '🎉 Resonance AI is ready! Discover the stories behind every song.';
+                document.body.appendChild(successMsg);
+
+                setTimeout(() => {
+                    successMsg.style.opacity = '0';
+                    successMsg.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => successMsg.remove(), 500);
+                }, 3000);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
