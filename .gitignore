@@ -10,3 +10,5 @@ coverage/
 .nyc_output/
 .cache/
 temp/
+.vercel
+API_SETUP_STEPS.md

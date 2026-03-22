@@ -13,7 +13,12 @@
       "Bash(open:*)",
       "Bash(git branch:*)",
       "Bash(git remote add:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(npm install:*)",
+      "Bash(npx playwright:*)",
+      "Bash(npx vercel env add DB_HOST production)",
+      "Bash(npx vercel env ls)",
+      "Bash(npx vercel:*)"
     ],
     "deny": [],
     "ask": []

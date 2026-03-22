@@ -78,6 +78,43 @@ export class Database {
         );
       `,
       `
+        CREATE TABLE IF NOT EXISTS api_call_logs (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          service VARCHAR(50) NOT NULL,
+          endpoint VARCHAR(255) NOT NULL,
+          method VARCHAR(10) NOT NULL,
+          tokens_used INTEGER,
+          quota_units_used INTEGER,
+          cost_usd DECIMAL(10, 6),
+          response_time_ms INTEGER NOT NULL,
+          status_code INTEGER NOT NULL,
+          error_message TEXT,
+          metadata JSONB,
+          timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `,
+      `
+        CREATE TABLE IF NOT EXISTS admin_settings (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          setting_key VARCHAR(255) UNIQUE NOT NULL,
+          setting_value JSONB NOT NULL,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `,
+      `
+        CREATE TABLE IF NOT EXISTS cost_alerts (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          alert_type VARCHAR(50) NOT NULL,
+          threshold_value DECIMAL(10, 2) NOT NULL,
+          current_value DECIMAL(10, 2) NOT NULL,
+          message TEXT NOT NULL,
+          is_resolved BOOLEAN DEFAULT false,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          resolved_at TIMESTAMP
+        );
+      `,
+      `
         CREATE INDEX IF NOT EXISTS idx_songs_title_artist ON songs(LOWER(title), LOWER(artist));
       `,
       `
@@ -94,6 +131,21 @@ export class Database {
       `,
       `
         CREATE INDEX IF NOT EXISTS idx_song_analyses_song_id ON song_analyses(song_id);
+      `,
+      `
+        CREATE INDEX IF NOT EXISTS idx_api_call_logs_service ON api_call_logs(service);
+      `,
+      `
+        CREATE INDEX IF NOT EXISTS idx_api_call_logs_timestamp ON api_call_logs(timestamp);
+      `,
+      `
+        CREATE INDEX IF NOT EXISTS idx_api_call_logs_service_timestamp ON api_call_logs(service, timestamp);
+      `,
+      `
+        CREATE INDEX IF NOT EXISTS idx_admin_settings_key ON admin_settings(setting_key);
+      `,
+      `
+        CREATE INDEX IF NOT EXISTS idx_cost_alerts_type ON cost_alerts(alert_type, is_resolved);
       `
     ];
 

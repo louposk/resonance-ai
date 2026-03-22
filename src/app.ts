@@ -5,7 +5,9 @@ import dotenv from 'dotenv';
 import { database } from './config/database';
 import songRoutes from './routes/songs';
 import authRoutes from './routes/auth';
+import adminRoutes from './routes/admin';
 import { generalRateLimit } from './middleware/rateLimiting';
+import { AlertService } from './services/AlertService';
 
 dotenv.config();
 
@@ -60,6 +62,7 @@ export function createApp() {
   // API routes
   app.use('/api/songs', songRoutes);
   app.use('/api/auth', authRoutes);
+  app.use('/api/admin', adminRoutes);
 
   // API documentation
   app.get('/api', (req, res) => {
@@ -106,6 +109,11 @@ export function createApp() {
     res.sendFile('index.html', { root: 'public' });
   });
 
+  // Serve admin dashboard
+  app.get('/admin', (req, res) => {
+    res.sendFile('admin.html', { root: 'public' });
+  });
+
   // 404 handler
   app.use('*', (req, res) => {
     res.status(404).json({
@@ -142,6 +150,11 @@ export async function initializeApp() {
     console.log('Initializing database...');
     await database.createTables();
     console.log('Database initialized successfully');
+
+    // Initialize alert settings
+    console.log('Initializing alert system...');
+    await AlertService.initializeDefaultSettings();
+    console.log('Alert system initialized successfully');
   } catch (error) {
     console.error('Failed to initialize database:', error);
     throw error;
