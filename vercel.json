@@ -1,28 +1,16 @@
 {
-  "name": "resonance-ai",
+  "name": "resonance-ai-music",
   "version": 2,
   "builds": [
     {
-      "src": "dist/index-full.js",
+      "src": "dist/index-demo.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "public/**/*",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/dist/index-full.js"
-    },
-    {
-      "src": "/admin",
-      "dest": "/dist/index-full.js"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/public/$1"
+      "dest": "/dist/index-demo.js"
     }
   ],
   "env": {
