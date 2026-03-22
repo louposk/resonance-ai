@@ -1,0 +1,364 @@
+/* Resonance AI Extension Styles */
+.resonance-panel {
+  position: fixed;
+  width: 380px;
+  max-width: 90vw;
+  max-height: 80vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  z-index: 10001;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: white;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.resonance-panel.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+.resonance-panel.minimized .resonance-content {
+  display: none;
+}
+
+/* Positioning */
+.resonance-panel.top-right {
+  top: 20px;
+  right: 20px;
+}
+
+.resonance-panel.top-left {
+  top: 20px;
+  left: 20px;
+}
+
+.resonance-panel.bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.resonance-panel.bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+/* Header */
+.resonance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.resonance-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.resonance-logo span:first-child {
+  font-size: 20px;
+}
+
+.logo-text {
+  background: linear-gradient(45deg, #4fc3f7, #29b6f6, #03a9f4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.resonance-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.resonance-controls button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.resonance-controls button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Content */
+.resonance-content {
+  padding: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Loading State */
+.resonance-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #4fc3f7;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error State */
+.resonance-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.error-icon {
+  font-size: 32px;
+}
+
+.retry-button, .config-button {
+  padding: 8px 16px;
+  background: #4fc3f7;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.retry-button:hover, .config-button:hover {
+  background: #29b6f6;
+}
+
+/* Song Info */
+.song-info {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.song-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #4fc3f7;
+}
+
+.song-artist {
+  font-size: 14px;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Tabs */
+.analysis-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.tab {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.tab.active {
+  background: #4fc3f7;
+  color: white;
+}
+
+/* Tab Content */
+.analysis-content {
+  position: relative;
+  min-height: 120px;
+}
+
+.tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.meaning-text, .trivia-text, .process-text {
+  line-height: 1.6;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Themes */
+.themes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.theme-tag {
+  background: rgba(79, 195, 247, 0.2);
+  color: #4fc3f7;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid rgba(79, 195, 247, 0.3);
+}
+
+.no-themes {
+  font-style: italic;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+/* Other States */
+.resonance-no-music, .resonance-no-api {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.info-icon, .warning-icon {
+  font-size: 32px;
+}
+
+/* Notification */
+.resonance-notification {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.configure-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-left: auto;
+}
+
+.dismiss-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  margin-left: 4px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Toggle Button */
+.resonance-toggle-button {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Utility Classes */
+.hidden {
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .resonance-panel {
+    width: 95vw;
+    max-width: none;
+    left: 2.5vw !important;
+    right: 2.5vw !important;
+    top: 20px;
+    bottom: auto;
+  }
+
+  .analysis-tabs {
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    font-size: 11px;
+    padding: 6px 8px;
+  }
+}
+
+/* Scrollbar */
+.resonance-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.resonance-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.resonance-content::-webkit-scrollbar-thumb {
+  background: rgba(79, 195, 247, 0.5);
+  border-radius: 3px;
+}
+
+.resonance-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 195, 247, 0.7);
+}

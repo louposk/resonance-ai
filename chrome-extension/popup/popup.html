@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resonance AI Settings</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <div class="logo">
+        <span class="logo-icon">🎵</span>
+        <span class="logo-text">Resonance AI</span>
+      </div>
+      <div class="version">v1.0.0</div>
+    </header>
+
+    <main class="popup-content">
+      <!-- API Key Section -->
+      <section class="section">
+        <h3>API Configuration</h3>
+        <div class="form-group">
+          <label for="apiKey">API Key</label>
+          <div class="input-group">
+            <input type="password" id="apiKey" placeholder="Enter your Resonance API key">
+            <button type="button" id="toggleApiKey" class="toggle-btn">👁️</button>
+          </div>
+          <div class="help-text">
+            Get your API key from the <a href="https://resonanceaimusic.com" target="_blank">Resonance AI dashboard</a>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button id="saveApiKey" class="btn btn-primary">Save</button>
+          <button id="testApiKey" class="btn btn-secondary">Test Connection</button>
+        </div>
+        <div id="apiStatus" class="status-message"></div>
+      </section>
+
+      <!-- Settings Section -->
+      <section class="section">
+        <h3>Settings</h3>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="autoShow">
+            <span class="checkmark"></span>
+            Auto-show analysis panel
+          </label>
+          <div class="help-text">Automatically show the analysis panel when a music video is detected</div>
+        </div>
+
+        <div class="form-group">
+          <label for="panelPosition">Panel Position</label>
+          <select id="panelPosition">
+            <option value="top-right">Top Right</option>
+            <option value="top-left">Top Left</option>
+            <option value="bottom-right">Bottom Right</option>
+            <option value="bottom-left">Bottom Left</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="detectionSensitivity">Detection Sensitivity</label>
+          <select id="detectionSensitivity">
+            <option value="strict">Strict (Only obvious music videos)</option>
+            <option value="normal">Normal (Balanced detection)</option>
+            <option value="relaxed">Relaxed (Detect more videos)</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Current Song Section -->
+      <section class="section">
+        <h3>Current Song</h3>
+        <div id="currentSongInfo" class="current-song">
+          <div class="no-song">No song detected</div>
+        </div>
+        <div class="form-actions">
+          <button id="detectSong" class="btn btn-secondary">Detect Song</button>
+          <button id="togglePanel" class="btn btn-secondary">Toggle Panel</button>
+        </div>
+      </section>
+
+      <!-- Cache Management -->
+      <section class="section">
+        <h3>Cache Management</h3>
+        <div class="cache-info">
+          <div class="cache-stats">
+            <span>Cached songs: <span id="cacheCount">0</span></span>
+          </div>
+          <div class="form-actions">
+            <button id="clearCache" class="btn btn-danger">Clear Cache</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Links Section -->
+      <section class="section">
+        <h3>Links</h3>
+        <div class="links">
+          <a href="https://resonanceaimusic.com" target="_blank" class="link-item">
+            <span>🌐</span> Resonance AI Dashboard
+          </a>
+          <a href="https://resonanceaimusic.com/api" target="_blank" class="link-item">
+            <span>📚</span> API Documentation
+          </a>
+          <a href="https://github.com/resonance-ai" target="_blank" class="link-item">
+            <span>📁</span> GitHub Repository
+          </a>
+        </div>
+      </section>
+
+      <!-- Keyboard Shortcuts -->
+      <section class="section">
+        <h3>Keyboard Shortcuts</h3>
+        <div class="shortcuts">
+          <div class="shortcut-item">
+            <span class="shortcut-keys">Ctrl+Shift+R</span>
+            <span class="shortcut-desc">Toggle analysis panel</span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-keys">Escape</span>
+            <span class="shortcut-desc">Close analysis panel</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="popup-footer">
+      <div class="footer-text">
+        Made with ❤️ for music lovers
+      </div>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

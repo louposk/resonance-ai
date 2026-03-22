@@ -1,0 +1,74 @@
+{
+  "manifest_version": 3,
+  "name": "Resonance AI - YouTube Music Analysis",
+  "version": "1.0.0",
+  "description": "Get AI-powered insights about songs while watching YouTube music videos. Discover meanings, themes, and trivia behind your favorite tracks.",
+
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "https://music.youtube.com/*",
+    "http://localhost:3000/*",
+    "https://resonanceaimusic.com/*",
+    "https://*.resonanceaimusic.com/*"
+  ],
+
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://music.youtube.com/*"
+      ],
+      "js": [
+        "utils/helpers.js",
+        "content/song-detector.js",
+        "content/ui-components.js",
+        "content/youtube-injector.js"
+      ],
+      "css": [
+        "assets/styles/content.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Resonance AI",
+    "default_icon": {
+      "16": "assets/icons/icon-16.png",
+      "32": "assets/icons/icon-32.png",
+      "48": "assets/icons/icon-48.png",
+      "128": "assets/icons/icon-128.png"
+    }
+  },
+
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "32": "assets/icons/icon-32.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/styles/*.css",
+        "assets/icons/*.png"
+      ],
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://music.youtube.com/*"
+      ]
+    }
+  ]
+}
