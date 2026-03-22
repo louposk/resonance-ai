@@ -1,24 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm init:*)",
-      "Bash(git init:*)",
-      "Bash(npm install)",
-      "Bash(npm run build:*)",
-      "Bash(npm run dev:*)",
-      "Bash(npx ts-node:*)",
-      "Bash(open http://localhost:3000)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(open:*)",
-      "Bash(git branch:*)",
-      "Bash(git remote add:*)",
-      "Bash(git push:*)",
-      "Bash(npm install:*)",
-      "Bash(npx playwright:*)",
-      "Bash(npx vercel env add DB_HOST production)",
-      "Bash(npx vercel env ls)",
-      "Bash(npx vercel:*)"
+      "Bash(pkill -f \"node\")",
+      "Bash(pkill -f \"ts-node\")"
     ],
     "deny": [],
     "ask": []

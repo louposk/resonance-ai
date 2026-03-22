@@ -20,7 +20,7 @@ vercel --prod
 # - Output directory: dist
 ```
 
-**Result**: Your beautiful UI will be live at `https://resonance-ai-yourname.vercel.app` in 2 minutes! ✨
+**Result**: Your beautiful UI will be live at `https://resonanceaimusic.com` in 2 minutes! ✨
 
 ---
 
@@ -71,9 +71,12 @@ For immediate results, use **Vercel**:
 ```bash
 # One command deployment
 npm install -g vercel && npm run build && vercel --prod
+
+# Configure custom domain
+vercel domains add resonanceaimusic.com
 ```
 
-Your stunning Resonance AI will be live in minutes! 🌟
+Your stunning Resonance AI will be live at https://resonanceaimusic.com in minutes! 🌟
 
 ---
 
@@ -129,10 +132,10 @@ YOUTUBE_API_KEY=your-youtube-key
 
 Once deployed, get a custom domain:
 
-1. **Buy domain**: `resonance-ai.com` or `getresonance.ai`
+1. **Domain**: `resonanceaimusic.com` (already configured!)
 2. **Point to deployment**:
-   - Vercel: Add domain in dashboard
-   - Railway: Configure custom domain
+   - Vercel: Domain configured in project settings
+   - Railway: Custom domain pointing to deployment
 3. **SSL**: Automatically handled by platforms
 
 ---
