@@ -29,7 +29,13 @@ export function createApp() {
 
   // CORS
   app.use(cors({
-    origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:3001'],
+    origin: process.env.ALLOWED_ORIGINS?.split(',') || [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://resonanceaimusic.com',
+      'https://www.resonanceaimusic.com',
+      /^chrome-extension:\/\/.*/
+    ],
     credentials: true
   }));
 

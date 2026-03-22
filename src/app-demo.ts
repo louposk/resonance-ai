@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
@@ -21,9 +22,14 @@ export function createApp() {
     },
   }));
 
-  // CORS
+  // CORS - Allow production domain and Chrome extension
   app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://resonanceaimusic.com',
+      /^chrome-extension:\/\/.*/
+    ],
     credentials: true
   }));
 
@@ -81,12 +87,65 @@ export function createApp() {
     });
   });
 
-  // Static files for UI
-  app.use(express.static('public'));
+  // Static files for UI - determine the correct public path
+  const publicPath = path.join(__dirname, 'public');
+  console.log('Serving static files from:', publicPath);
+  app.use(express.static(publicPath));
 
   // Serve the UI at root
   app.get('/', (req, res) => {
-    res.sendFile('index.html', { root: 'public' });
+    try {
+      const indexPath = path.join(publicPath, 'index.html');
+      console.log('Attempting to serve:', indexPath);
+      res.sendFile(indexPath, (err) => {
+        if (err) {
+          console.error('Error serving index.html:', err);
+          res.status(500).send(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>Resonance AI Music</title>
+              <style>
+                body { font-family: Arial, sans-serif; background: #1a1a1a; color: white; text-align: center; padding: 50px; }
+                .error { background: #2d1b69; padding: 20px; border-radius: 10px; max-width: 600px; margin: 0 auto; }
+              </style>
+            </head>
+            <body>
+              <div class="error">
+                <h1>🎵 Resonance AI Music</h1>
+                <p>Welcome to Resonance AI Music Platform!</p>
+                <p>The full interface is currently being loaded...</p>
+                <p><a href="/api" style="color: #8b5cf6;">View API Documentation</a></p>
+                <p><a href="/health" style="color: #8b5cf6;">Health Check</a></p>
+              </div>
+            </body>
+            </html>
+          `);
+        }
+      });
+    } catch (error) {
+      console.error('Error in root route:', error);
+      res.status(500).send(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Resonance AI Music</title>
+          <style>
+            body { font-family: Arial, sans-serif; background: #1a1a1a; color: white; text-align: center; padding: 50px; }
+            .error { background: #2d1b69; padding: 20px; border-radius: 10px; max-width: 600px; margin: 0 auto; }
+          </style>
+        </head>
+        <body>
+          <div class="error">
+            <h1>🎵 Resonance AI Music</h1>
+            <p>Welcome to Resonance AI Music Platform!</p>
+            <p><a href="/api" style="color: #8b5cf6;">View API Documentation</a></p>
+            <p><a href="/health" style="color: #8b5cf6;">Health Check</a></p>
+          </div>
+        </body>
+        </html>
+      `);
+    }
   });
 
   // 404 handler
